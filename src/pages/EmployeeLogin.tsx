@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const EmployeeLogin = () => {
   const [emailOrPhone, setEmailOrPhone] = useState("");
@@ -8,6 +8,8 @@ const EmployeeLogin = () => {
 
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+
+  const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -17,7 +19,7 @@ const EmployeeLogin = () => {
 
     try {
       const response = await axios.post(
-        "/api/employees/login",
+        "http://localhost:5000/api/employees/login",
         {
           emailOrPhone,
           password,
@@ -33,7 +35,7 @@ const EmployeeLogin = () => {
 
       setSuccess("Employee login successful!");
 
-      window.location.href = "/employee/dashboard";
+      navigate("/employee/dashboard");
 
     } catch (error: any) {
       console.log(error);
@@ -75,7 +77,6 @@ const EmployeeLogin = () => {
         <form onSubmit={handleLogin}>
 
           <div className="form-group">
-
             <label>Email or Phone</label>
 
             <input
@@ -87,11 +88,9 @@ const EmployeeLogin = () => {
               }
               required
             />
-
           </div>
 
           <div className="form-group">
-
             <label>Password</label>
 
             <input
@@ -103,27 +102,41 @@ const EmployeeLogin = () => {
               }
               required
             />
-
           </div>
 
-          <button type="submit">
+          <button
+            type="submit"
+            className="candidate-login-button"
+          >
             Employee Login
           </button>
 
-          {/* Signup Link */}
-
           <div className="signup-link">
-
             <p>
-              Don't have an account?{" "}
+              Don't have an employee account?{" "}
               <Link to="/create-employee">
                 Sign Up
               </Link>
             </p>
-
           </div>
 
         </form>
+
+        <div className="employee-login-section">
+
+          <div className="login-divider">
+            <span>OR</span>
+          </div>
+
+          <button
+            type="button"
+            className="employee-login-button"
+            onClick={() => navigate("/login")}
+          >
+            Candidate Login
+          </button>
+
+        </div>
 
       </div>
 
