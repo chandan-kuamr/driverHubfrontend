@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const EmployeeLogin = () => {
   const [emailOrPhone, setEmailOrPhone] = useState("");
@@ -16,7 +17,7 @@ const EmployeeLogin = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/employees/login",
+        "/api/employees/login",
         {
           emailOrPhone,
           password,
@@ -108,6 +109,19 @@ const EmployeeLogin = () => {
           <button type="submit">
             Employee Login
           </button>
+
+          {/* Signup Link */}
+
+          <div className="signup-link">
+
+            <p>
+              Don't have an account?{" "}
+              <Link to="/create-employee">
+                Sign Up
+              </Link>
+            </p>
+
+          </div>
 
         </form>
 
